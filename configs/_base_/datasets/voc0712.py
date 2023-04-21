@@ -44,31 +44,15 @@ train_dataloader = dict(
         type='RepeatDataset',
         times=3,
         dataset=dict(
-            type='ConcatDataset',
-            # VOCDataset will add different `dataset_type` in dataset.metainfo,
-            # which will get error if using ConcatDataset. Adding
-            # `ignore_keys` can avoid this error.
-            ignore_keys=['dataset_type'],
-            datasets=[
-                dict(
-                    type=dataset_type,
-                    data_root=data_root,
-                    ann_file='VOC2007/ImageSets/Main/trainval.txt',
-                    data_prefix=dict(sub_data_root='VOC2007/'),
-                    filter_cfg=dict(
-                        filter_empty_gt=True, min_size=32, bbox_min_size=32),
-                    pipeline=train_pipeline,
-                    backend_args=backend_args),
-                # dict(
-                #     type=dataset_type,
-                #     data_root=data_root,
-                #     ann_file='VOC2012/ImageSets/Main/trainval.txt',
-                #     data_prefix=dict(sub_data_root='VOC2012/'),
-                #     filter_cfg=dict(
-                #         filter_empty_gt=True, min_size=32, bbox_min_size=32),
-                #     pipeline=train_pipeline,
-                #     backend_args=backend_args)
-            ])))
+            type=dataset_type,
+            data_root=data_root,
+            ann_file='VOC2007/ImageSets/Main/trainval.txt',
+            data_prefix=dict(sub_data_root='VOC2007/'),
+            filter_cfg=dict(
+                filter_empty_gt=True, min_size=32, bbox_min_size=32),
+            pipeline=train_pipeline,
+            backend_args=backend_args
+        )))
 
 val_dataloader = dict(
     batch_size=1,
