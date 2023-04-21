@@ -35,24 +35,21 @@ test_pipeline = [
                    'scale_factor'))
 ]
 train_dataloader = dict(
-    batch_size=2,
+    batch_size=16,
     num_workers=2,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     batch_sampler=dict(type='AspectRatioBatchSampler'),
     dataset=dict(
-        type='RepeatDataset',
-        times=3,
-        dataset=dict(
-            type=dataset_type,
-            data_root=data_root,
-            ann_file='VOC2007/ImageSets/Main/trainval.txt',
-            data_prefix=dict(sub_data_root='VOC2007/'),
-            filter_cfg=dict(
-                filter_empty_gt=True, min_size=32, bbox_min_size=32),
-            pipeline=train_pipeline,
-            backend_args=backend_args
-        )))
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='VOC2007/ImageSets/Main/trainval.txt',
+        data_prefix=dict(sub_data_root='VOC2007/'),
+        filter_cfg=dict(
+            filter_empty_gt=True, min_size=32, bbox_min_size=32),
+        pipeline=train_pipeline,
+        backend_args=backend_args
+    ))
 
 val_dataloader = dict(
     batch_size=1,
